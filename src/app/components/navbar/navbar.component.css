@@ -1,0 +1,20 @@
+.text-center {
+  text-align: center;
+}
+
+mat-toolbar {
+  position: relative;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+}

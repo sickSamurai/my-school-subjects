@@ -1,0 +1,37 @@
+<form (submit)="saveData()" [formGroup]="formGroup" autocomplete="off">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ titles[mode] }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="vbox">
+        <mat-form-field appearance="fill">
+          <mat-label>Nombre</mat-label>
+          <input formControlName="name" matInput placeholder="Matemáticas" />
+          <mat-hint>Ingresa el nombre de la asignatura</mat-hint>
+          <mat-error *ngIf="formGroup.controls.name.invalid">Campo Requerido</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Nota</mat-label>
+          <input formControlName="grade" matInput type="number" placeholder="5.0" />
+          <mat-hint>Ingresa la nota de la asignatura</mat-hint>
+          <mat-error *ngIf="formGroup.controls.grade.invalid">{{ gradeError }}</mat-error>
+        </mat-form-field>
+        <mat-slide-toggle formControlName="wasCoursed" color="primary">
+          ¿Ya cursaste la materia?
+        </mat-slide-toggle>
+
+        <mat-form-field>
+          <mat-label>Créditos</mat-label>
+          <input formControlName="credits" matInput type="number" placeholder="2" />
+          <mat-hint>Ingresa el numero de créditos</mat-hint>
+          <mat-error *ngIf="formGroup.controls.credits.invalid">Campo Requerido</mat-error>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button type="submit" mat-button color="primary">GUARDAR</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

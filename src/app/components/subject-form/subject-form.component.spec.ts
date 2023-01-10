@@ -1,0 +1,22 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing'
+
+import { SubjectFormComponent } from './subject-form.component'
+
+describe('CourseFormComponent', () => {
+  let component: SubjectFormComponent;
+  let fixture: ComponentFixture<SubjectFormComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [SubjectFormComponent],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(SubjectFormComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

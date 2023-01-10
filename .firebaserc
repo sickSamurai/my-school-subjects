@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "credit-cards-app-dd064": {
+      "hosting": {
+        "subjects-manager": [
+          "angular-apps-20884"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "credit-cards-app-dd064"
+  }
+}

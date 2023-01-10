@@ -1,0 +1,6 @@
+<div class="main">
+  <subject-list *ngIf="dataExists; else noData"></subject-list>
+</div>
+<ng-template #noData>
+  <no-data-card></no-data-card>
+</ng-template>
