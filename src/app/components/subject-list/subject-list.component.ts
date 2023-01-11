@@ -7,7 +7,7 @@ import { Router } from '@angular/router'
 import { SchoolSubjectsService } from 'src/app/services/subjects.service'
 
 import { SchoolSubject } from '../../models/SchoolSubject'
-import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-delete-dialog.component'
+import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component'
 
 @Component({
   selector: 'subject-list',
@@ -34,16 +34,16 @@ export class SubjectListComponent implements AfterViewInit {
 
   confirmDelete(id: string) {
     this.alertDialog
-      .open(ConfirmDeleteDialogComponent)
+      .open(DeleteDialogComponent)
       .afterClosed()
       .subscribe(result => {
         if (result) this.delete(id)
       })
   }
 
-  delete(id: string) {
+  async delete(id: string) {
     if (id == undefined) throw new Error('id is undefined')
-    this.schoolSubjectsService.delete(id)
+    await this.schoolSubjectsService.delete(id)
   }
 
   get coursedCredits() {
@@ -61,8 +61,7 @@ export class SubjectListComponent implements AfterViewInit {
     const coursedSubjects = schoolSubjects.filter(schoolSubject => schoolSubject.grade != null)
     const average =
       coursedSubjects
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        .map(schoolSubject => schoolSubject.grade! * schoolSubject.credits)
+        .map(schoolSubject => (schoolSubject.grade || 0) * schoolSubject.credits)
         .reduce((previous, current) => previous + current) / this.coursedCredits
     return average
   }

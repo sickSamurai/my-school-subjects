@@ -13,7 +13,7 @@ import { addDoc, updateDoc } from '@firebase/firestore'
 
 import { SchoolSubject } from '../models/SchoolSubject'
 
-const schoolSubjectConverter: FirestoreDataConverter<SchoolSubject> = {
+const dataConverter: FirestoreDataConverter<SchoolSubject> = {
   toFirestore(schoolSubject) {
     return { ...schoolSubject }
   },
@@ -32,38 +32,37 @@ const schoolSubjectConverter: FirestoreDataConverter<SchoolSubject> = {
   providedIn: 'root'
 })
 export class SchoolSubjectsService {
-  private subjectsCollection: CollectionReference<SchoolSubject>
+  private collection: CollectionReference<SchoolSubject>
 
-  getSubjects = () => collectionData(this.subjectsCollection)
+  getSubjects = () => collectionData(this.collection)
 
-  add(newSubject: SchoolSubject) {
-    addDoc(this.subjectsCollection, newSubject)
+  async add(newSubject: SchoolSubject) {
+    addDoc(this.collection, newSubject)
+    await this.router.navigateByUrl('/')
     this.router.navigateByUrl('/')
   }
 
-  edit(subjectToEdit: SchoolSubject) {
+  async edit(subjectToEdit: SchoolSubject) {
     if (subjectToEdit.id == undefined) throw new Error('id is undefined')
     try {
-      const docRef = doc(this.subjectsCollection, subjectToEdit.id)
-      updateDoc(docRef, subjectToEdit)
+      const docRef = doc(this.collection, subjectToEdit.id)
+      await updateDoc(docRef, subjectToEdit)
       this.router.navigateByUrl('/')
     } catch (err) {
       console.log(err)
     }
   }
 
-  delete(id: string) {
+  async delete(id: string) {
     try {
-      const docRef = doc(this.subjectsCollection, id)
-      deleteDoc(docRef)
+      const docRef = doc(this.collection, id)
+      await deleteDoc(docRef)
     } catch (err) {
       console.log(err)
     }
   }
 
   constructor(private firestore: Firestore, private router: Router) {
-    this.subjectsCollection = collection(this.firestore, 'SchoolSubjects').withConverter(
-      schoolSubjectConverter
-    )
+    this.collection = collection(this.firestore, 'SchoolSubjects').withConverter(dataConverter)
   }
 }

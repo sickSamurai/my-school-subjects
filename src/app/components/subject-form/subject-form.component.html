@@ -18,6 +18,7 @@
           <mat-hint>Ingresa la nota de la asignatura</mat-hint>
           <mat-error *ngIf="formGroup.controls.grade.invalid">{{ gradeError }}</mat-error>
         </mat-form-field>
+
         <mat-slide-toggle formControlName="wasCoursed" color="primary">
           ¿Ya cursaste la materia?
         </mat-slide-toggle>

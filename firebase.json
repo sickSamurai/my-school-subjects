@@ -1,8 +1,8 @@
 {
   "hosting": [
     {
-      "target": "subjects-manager",
-      "public": "dist/subjects-manager",
+      "target": "school-subjects-manager",
+      "public": "dist/school-subjects-manager",
       "ignore": [
         "**/.*"
       ],
@@ -34,8 +34,8 @@
       ]
     },
     {
-      "target": "subjects-manager",
-      "public": "dist/subjects-manager",
+      "target": "school-subjects-manager",
+      "public": "dist/school-subjects-manager",
       "ignore": [
         "**/.*"
       ],

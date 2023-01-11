@@ -1,4 +1,4 @@
-<div class="main">
+<div [@bounceIn]="true" class="main">
   <subject-list *ngIf="dataExists; else noData"></subject-list>
 </div>
 <ng-template #noData>

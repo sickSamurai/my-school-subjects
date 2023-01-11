@@ -8,16 +8,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 import { environment } from '../environments/environment'
 import { AppComponent } from './app.component'
+import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.component'
 import { NavbarComponent } from './components/navbar/navbar.component'
+import { NoDataCardComponent } from './components/no-data-card/no-data-card.component'
 import { SubjectFormComponent } from './components/subject-form/subject-form.component'
 import { SubjectListComponent } from './components/subject-list/subject-list.component'
 import { AngularMaterialModule } from './modules/angular-material.module'
 import { RoutingModule } from './modules/routing.module'
 import { FormPageComponent } from './pages/form-page/form-page.component'
 import { MainPageComponent } from './pages/main-page/main-page.component'
-import { ToastComponent } from './shared/toast/toast.component';
-import { ConfirmDeleteDialogComponent } from './components/confirm-delete-dialog/confirm-delete-dialog.component';
-import { NoDataCardComponent } from './components/no-data-card/no-data-card.component'
+import { ToastComponent } from './shared/toast/toast.component'
 
 @NgModule({
   declarations: [
@@ -28,7 +28,7 @@ import { NoDataCardComponent } from './components/no-data-card/no-data-card.comp
     ToastComponent,
     MainPageComponent,
     FormPageComponent,
-    ConfirmDeleteDialogComponent,
+    DeleteDialogComponent,
     NoDataCardComponent
   ],
   imports: [
