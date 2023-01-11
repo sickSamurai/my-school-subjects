@@ -33,40 +33,43 @@ export class SubjectFormComponent implements OnInit {
 
   get gradeError() {
     const errors = this.formGroup.controls.grade.errors
-    let message = ''
     if (errors) {
-      if (errors['required'] != undefined) message = 'Campo Requerido'
-      else if (errors['min'] != undefined) message = 'El valor mínimo es 0'
-      else if (errors['max'] != undefined) message = 'El valor máximo es 0'
-    }
-    return message
+      if (errors['required'] != undefined) return 'Campo Requerido'
+      else if (errors['min'] != undefined) return 'El valor mínimo es 0'
+      else if (errors['max'] != undefined) return 'El valor máximo es 0'
+      else return 'Error Desconocido'
+    } else return ''
   }
 
-  chargeEditData() {
+  setMode() {
     this.activatedRouted.queryParams.subscribe(value => {
-      if (value['id'] == undefined || value['name'] == undefined || value['credits'] == undefined) return
-      this.mode = 'editionMode'
-      this.subjectData.id = value['id']
-      this.formGroup.setValue({
-        name: value['name'],
-        credits: +value['credits'],
-        grade: +value['grade'],
-        wasCoursed: true
-      })
+      if (value['id'] == undefined || value['name'] == undefined || value['credits'] == undefined) {
+        this.mode = 'creationMode'
+        this.formGroup.reset({ wasCoursed: true })
+      } else {
+        this.mode = 'editionMode'
+        this.subjectData.id = value['id']
+        this.formGroup.setValue({
+          name: value['name'],
+          credits: +value['credits'],
+          grade: +value['grade'],
+          wasCoursed: true
+        })
+      }
     })
   }
 
-  saveData() {
+  async saveData() {
     const { name, credits, grade } = this.formGroup.value
     if (!name || !credits) throw new Error('Invalid Form')
     if (grade == undefined) this.subjectData = { ...this.subjectData, name, credits, grade: null }
     else this.subjectData = { ...this.subjectData, name, credits, grade }
-    if (this.mode == 'creationMode') this.subjectsService.add(this.subjectData)
-    else this.subjectsService.edit(this.subjectData)
+    if (this.mode == 'creationMode') await this.subjectsService.add(this.subjectData)
+    else await this.subjectsService.edit(this.subjectData)
   }
 
   ngOnInit(): void {
-    this.chargeEditData()
+    this.setMode()
     this.formGroup.controls.wasCoursed.valueChanges.subscribe(value => {
       const gradeControl = this.formGroup.controls.grade
       gradeControl.updateValueAndValidity()
@@ -79,8 +82,8 @@ export class SubjectFormComponent implements OnInit {
   }
 
   constructor(private activatedRouted: ActivatedRoute, private subjectsService: SchoolSubjectsService) {
-    this.subjectData = new SchoolSubject('', 0)
     this.mode = 'creationMode'
+    this.subjectData = new SchoolSubject('', 0)
     this.formGroup = new FormGroup(<FormControls>{
       name: new FormControl('', [Validators.required]),
       grade: new FormControl<number | null>(null, [
